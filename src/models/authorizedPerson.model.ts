@@ -13,7 +13,7 @@ class AuthorizedPerson extends Model<
   InferCreationAttributes<AuthorizedPerson>
 > {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
   declare name: string;
   declare address: string;
   declare mobileNum: string;
@@ -48,7 +48,7 @@ AuthorizedPerson.init(
     bvn: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, allowNull: false },
     meansOfIdentification: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.STRING,
       allowNull: false,
       field: "means_of_identification",
     },

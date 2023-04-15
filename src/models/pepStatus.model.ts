@@ -8,12 +8,9 @@ import {
 } from "sequelize";
 import PersonalDetail from "./personalDetail.model";
 
-class PepStatus extends Model<
-  InferAttributes<PepStatus>,
-  InferCreationAttributes<PepStatus>
-> {
+class PepStatus extends Model<InferAttributes<PepStatus>, InferCreationAttributes<PepStatus>> {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
 
   declare status: string;
   declare details: string | null;
@@ -24,7 +21,7 @@ class PepStatus extends Model<
 
 PepStatus.init(
   {
-    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    id: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
     userId: {
       type: DataTypes.INTEGER,
       field: "user_id",

@@ -13,7 +13,7 @@ class EmploymentDetail extends Model<
   InferCreationAttributes<EmploymentDetail>
 > {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
 
   declare employmentStatus: string;
   declare employerName: string | null;
@@ -46,7 +46,6 @@ EmploymentDetail.init(
     employerAddress: { type: DataTypes.TEXT, field: "employer_address" },
     employmentDate: {
       type: DataTypes.DATEONLY,
-      allowNull: false,
       field: "employment_date",
     },
     createdAt: DataTypes.DATE,

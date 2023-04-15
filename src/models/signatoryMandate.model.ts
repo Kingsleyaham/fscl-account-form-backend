@@ -13,11 +13,11 @@ class SignatoryMandate extends Model<
   InferCreationAttributes<SignatoryMandate>
 > {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
 
   declare name: string;
   declare designation: string;
-  declare signatoryClass: string;
+  declare class: string;
   declare signature: string;
 
   declare createdAt: CreationOptional<Date>;
@@ -37,7 +37,7 @@ SignatoryMandate.init(
     },
     name: { type: DataTypes.STRING, allowNull: false },
     designation: { type: DataTypes.STRING, allowNull: false },
-    signatoryClass: {
+    class: {
       type: DataTypes.STRING,
       field: "signatory_class",
       allowNull: false,

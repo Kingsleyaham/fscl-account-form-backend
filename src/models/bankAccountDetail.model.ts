@@ -13,12 +13,11 @@ class BankAccountDetail extends Model<
   InferCreationAttributes<BankAccountDetail>
 > {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
 
   declare accountName: string;
   declare accountNumber: string;
   declare bank: string;
-  declare email: string;
   declare bvn: string;
   declare accountOpenDate: Date;
 
@@ -48,7 +47,6 @@ BankAccountDetail.init(
       field: "account_number",
     },
     bank: { type: DataTypes.STRING, allowNull: false },
-    email: { type: DataTypes.STRING, allowNull: false },
     bvn: { type: DataTypes.STRING, allowNull: false },
     accountOpenDate: {
       type: DataTypes.DATEONLY,

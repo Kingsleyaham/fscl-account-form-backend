@@ -13,7 +13,7 @@ class NextOfKin extends Model<
   InferCreationAttributes<NextOfKin>
 > {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
 
   declare name: string;
   declare title: string;

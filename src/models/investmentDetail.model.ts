@@ -13,9 +13,8 @@ class InvestmentDetail extends Model<
   InferCreationAttributes<InvestmentDetail>
 > {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
 
-  declare gender: string;
   declare mobileNum: string;
   declare email: string;
   declare address: string;
@@ -36,7 +35,6 @@ InvestmentDetail.init(
         key: "id",
       },
     },
-    gender: { type: DataTypes.STRING, allowNull: false },
     mobileNum: {
       type: DataTypes.STRING,
       allowNull: false,

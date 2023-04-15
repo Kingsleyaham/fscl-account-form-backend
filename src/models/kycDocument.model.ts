@@ -13,7 +13,7 @@ class KycDocument extends Model<
   InferCreationAttributes<KycDocument>
 > {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
 
   declare utilityBill: string;
   declare identityUpload: string;

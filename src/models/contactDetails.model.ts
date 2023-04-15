@@ -13,10 +13,10 @@ class ContactDetail extends Model<
   InferCreationAttributes<ContactDetail>
 > {
   declare id: CreationOptional<number>;
-  declare userId: number;
+  declare userId: number | null;
 
   declare address: string;
-  declare postAddress: string;
+  declare postalAddress: string;
   declare mobileNumber: string;
   declare email: string;
 
@@ -40,7 +40,7 @@ ContactDetail.init(
       allowNull: false,
       field: "contact_address",
     },
-    postAddress: {
+    postalAddress: {
       type: DataTypes.TEXT,
       allowNull: false,
       field: "post_address",
