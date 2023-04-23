@@ -6,7 +6,6 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
-import PersonalDetail from "./personalDetail.model";
 
 class EmploymentDetail extends Model<
   InferAttributes<EmploymentDetail>,
@@ -31,10 +30,6 @@ EmploymentDetail.init(
     userId: {
       type: DataTypes.INTEGER,
       field: "user_id",
-      references: {
-        model: PersonalDetail,
-        key: "id",
-      },
     },
     employmentStatus: {
       type: DataTypes.STRING,

@@ -18,13 +18,9 @@ const individualAccountSchema = object({
   gender: string().required(),
   maritalStatus: string().required().label("marital status"),
   dateOfBirth: date()
-    .test(
-      "dateOfBirth",
-      "dob should be greater than 18years",
-      function (value: any) {
-        return differenceInYears(new Date(), new Date(value)) >= 18;
-      }
-    )
+    .test("dateOfBirth", "dob should be greater than 18years", function (value: any) {
+      return differenceInYears(new Date(), new Date(value)) >= 18;
+    })
     .required()
     .typeError("Date of Birth must be of type date")
     .nullable()
@@ -110,15 +106,9 @@ const individualAccountSchema = object({
   // Investment Details
   investAddress: string().required().trim().label("Investment Contact Address"),
 
-  investPostalAddress: string()
-    .required()
-    .trim()
-    .label("Investment Postal Address"),
+  investPostalAddress: string().required().trim().label("Investment Postal Address"),
 
-  investMobileNumber: string()
-    .required()
-    .trim()
-    .label("Investment Mobile Number"),
+  investMobileNumber: string().required().trim().label("Investment Mobile Number"),
 
   investEmail: string()
     .required()
@@ -131,24 +121,16 @@ const individualAccountSchema = object({
   bankName: string().required().trim().label("Bank Name"),
   accountNumber: string().required().trim().length(10).label("Account Number"),
   accountOpenDate: date()
-    .test(
-      "accountOpenDate",
-      "Invalid Account Opening Date",
-      function (value: any) {
-        return differenceInYears(new Date(), new Date(value)) <= 100;
-      }
-    )
+    .test("accountOpenDate", "Invalid Account Opening Date", function (value: any) {
+      return differenceInYears(new Date(), new Date(value)) <= 100;
+    })
     .typeError("Account open date must be of type date")
     .max(new Date())
     .required()
     .nullable()
     .label("Account Open Date"),
 
-  bvn: string()
-    .required()
-    .trim()
-    .label("Bvn")
-    .length(11, "Invalid Bank Verification No"),
+  bvn: string().required().trim().label("Bvn").length(11, "Invalid Bank Verification No"),
 
   // Authorized Persons
   authorizedPerson: array().of(
@@ -164,34 +146,6 @@ const individualAccountSchema = object({
         "Passport Photo is required",
         (value: any) => value.length > 0
       ),
-      // .test(
-      //   "file format",
-      //   "Invalid file format",
-      //   (value: any) =>
-      //     value.length && supportedFormat.includes(value[0].type)
-      // ),
-      // .test(
-      //   "file size",
-      //   "File size too large",
-      //   (value: any) => value.length && value[0].size <= 1048576
-      // ),
-      // signature: mixed()
-      //   .test(
-      //     "required",
-      //     "Signature is required",
-      //     (value: any) => value.length > 0
-      //   )
-      //   .test(
-      //     "file format",
-      //     "Invalid file format",
-      //     (value: any) =>
-      //       value.length && supportedFormat.includes(value[0].type)
-      //   )
-      //   .test(
-      //     "file size",
-      //     "File size too large",
-      //     (value: any) => value.length && value[0].size <= 1048576
-      //   ),
     })
   ),
 
@@ -201,90 +155,8 @@ const individualAccountSchema = object({
       name: string().required().trim().min(3, "signatory name too short"),
       designation: string().required().trim(),
       class: string().required().trim(),
-      // signature: mixed()
-      //   .test(
-      //     "required",
-      //     "Signature is required",
-      //     (value: any) => value.length > 0
-      //   )
-      //   .test(
-      //     "file format",
-      //     "Invalid file format",
-      //     (value: any) =>
-      //       value.length && supportedFormat.includes(value[0].type)
-      //   )
-      //   .test(
-      //     "file size",
-      //     "File size too large",
-      //     (value: any) => value.length && value[0].size <= 1048576
-      //   ),
     })
   ),
-
-  // Kyc documents
-  //   utilityBill: mixed()
-  //     .test(
-  //       "required",
-  //       "Utility Bill is required",
-  //       (value: any) => value.length > 0
-  //     )
-  //     .test(
-  //       "file format",
-  //       "Invalid file format",
-  //       (value: any) => value.length && supportedFormat.includes(value[0].type)
-  //     )
-  //     .test(
-  //       "file size",
-  //       "File size too large",
-  //       (value: any) => value.length && value[0].size <= 1048576
-  //     ),
-
-  //   identityUpload: mixed()
-  //     .test(
-  //       "required",
-  //       "Identification document is required",
-  //       (value: any) => value.length > 0
-  //     )
-  //     .test(
-  //       "file format",
-  //       "Invalid file format",
-  //       (value: any) => value.length && supportedFormat.includes(value[0].type)
-  //     )
-  //     .test(
-  //       "file size",
-  //       "File size too large",
-  //       (value: any) => value.length && value[0].size <= 1048576
-  //     ),
-
-  //   signatureUpload: mixed()
-  //     .test("required", "Signature is required", (value: any) => value.length > 0)
-  //     .test(
-  //       "file format",
-  //       "Invalid file format",
-  //       (value: any) => value.length && supportedFormat.includes(value[0].type)
-  //     )
-  //     .test(
-  //       "file size",
-  //       "File size too large",
-  //       (value: any) => value.length && value[0].size <= 1048576
-  //     ),
-
-  //   passportPhoto: mixed()
-  //     .test(
-  //       "required",
-  //       "Passport Photo is required",
-  //       (value: any) => value.length > 0
-  //     )
-  //     .test(
-  //       "file format",
-  //       "Invalid file format",
-  //       (value: any) => value.length && supportedFormat.includes(value[0].type)
-  //     )
-  //     .test(
-  //       "file size",
-  //       "File size too large",
-  //       (value: any) => value.length && value[0].size <= 1048576
-  //     ),
 });
 
 export default individualAccountSchema;

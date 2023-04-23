@@ -6,7 +6,6 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
-import PersonalDetail from "./personalDetail.model";
 
 class KycDocument extends Model<
   InferAttributes<KycDocument>,
@@ -30,10 +29,6 @@ KycDocument.init(
     userId: {
       type: DataTypes.INTEGER,
       field: "user_id",
-      references: {
-        model: PersonalDetail,
-        key: "id",
-      },
     },
     utilityBill: {
       type: DataTypes.STRING,

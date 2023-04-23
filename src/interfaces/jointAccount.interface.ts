@@ -9,7 +9,7 @@ import { IPepStatus } from "./pepStatus.interface";
 import { IPersonalDetails } from "./personalDetails.interface";
 import { ISignatories } from "./signatory.interface";
 
-export interface IIndividualAccount
+export interface IJointAccount
   extends IPersonalDetails,
     IContactDetails,
     IBankDetails,

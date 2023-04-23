@@ -6,7 +6,6 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
-import PersonalDetail from "./personalDetail.model";
 
 class PepStatus extends Model<InferAttributes<PepStatus>, InferCreationAttributes<PepStatus>> {
   declare id: CreationOptional<number>;
@@ -25,10 +24,6 @@ PepStatus.init(
     userId: {
       type: DataTypes.INTEGER,
       field: "user_id",
-      references: {
-        model: PersonalDetail,
-        key: "id",
-      },
     },
     status: { type: DataTypes.STRING, allowNull: false },
     details: { type: DataTypes.TEXT },

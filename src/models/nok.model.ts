@@ -6,12 +6,8 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
-import PersonalDetail from "./personalDetail.model";
 
-class NextOfKin extends Model<
-  InferAttributes<NextOfKin>,
-  InferCreationAttributes<NextOfKin>
-> {
+class NextOfKin extends Model<InferAttributes<NextOfKin>, InferCreationAttributes<NextOfKin>> {
   declare id: CreationOptional<number>;
   declare userId: number | null;
 
@@ -32,10 +28,6 @@ NextOfKin.init(
     userId: {
       type: DataTypes.INTEGER,
       field: "user_id",
-      references: {
-        model: PersonalDetail,
-        key: "id",
-      },
     },
     name: { type: DataTypes.STRING, allowNull: false },
     title: { type: DataTypes.STRING, allowNull: false },

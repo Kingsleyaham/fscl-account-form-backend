@@ -21,7 +21,7 @@ const fileName = (req: Request, file: Express.Multer.File, cb: any) => {
 };
 
 const storage = multer.diskStorage({
-  destination: "./src/uploads",
+  destination: "./src/assets/uploads",
   filename: fileName,
 });
 

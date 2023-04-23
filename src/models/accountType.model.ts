@@ -7,42 +7,45 @@ import {
   Model,
 } from "sequelize";
 
-class SignatoryMandate extends Model<
-  InferAttributes<SignatoryMandate>,
-  InferCreationAttributes<SignatoryMandate>
+class AccountType extends Model<
+  InferAttributes<AccountType>,
+  InferCreationAttributes<AccountType>
 > {
   declare id: CreationOptional<number>;
   declare userId: number | null;
 
-  declare name: string;
-  declare designation: string;
-  declare class: string;
-  declare signature: string;
+  declare accountType: string;
+  declare tableRef: string;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
 
-SignatoryMandate.init(
+AccountType.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     userId: {
       type: DataTypes.INTEGER,
       field: "user_id",
     },
-    name: { type: DataTypes.STRING, allowNull: false },
-    designation: { type: DataTypes.STRING, allowNull: false },
-    class: {
+    accountType: {
       type: DataTypes.STRING,
-      field: "signatory_class",
-      allowNull: false,
+      field: "account_type",
+      defaultValue: "individual",
+      comment: '"individual", "joint", "corporate"',
     },
-    signature: { type: DataTypes.STRING, allowNull: false },
+
+    tableRef: {
+      type: DataTypes.STRING,
+      field: "table_ref",
+      defaultValue: "personal_details",
+      comment: '"personal_details", "corporate_details"',
+    },
 
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   },
-  { tableName: "signatory_mandate", sequelize }
+  { tableName: "account_type", sequelize }
 );
 
-export default SignatoryMandate;
+export default AccountType;

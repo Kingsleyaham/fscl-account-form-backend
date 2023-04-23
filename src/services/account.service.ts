@@ -1,3 +1,7 @@
+import { pdfService } from "./pdf.service";
+import { mailService } from "./mail.service";
+import { ICorporateAccount } from "./../interfaces/corporateAccount.interface";
+import { IJointAccount } from "./../interfaces/jointAccount.interface";
 import { getItemWithIndex } from "../utils/getItem";
 import { IAuthorizedPersons } from "./../interfaces/authorizedPerson.interface";
 import { ISignatories } from "./../interfaces/signatory.interface";
@@ -20,10 +24,18 @@ import PepStatus from "../models/pepStatus.model";
 import KycDocument from "../models/kycDocument.model";
 import SignatoryMandate from "../models/signatoryMandate.model";
 import AuthorizedPerson from "../models/authorizedPerson.model";
+import AccountType from "../models/accountType.model";
+import CorporateDetail from "../models/corporateDetail.model";
+import { ICorporateDetails } from "../interfaces/corporateDetails.interface";
+import path from "path";
 
 class AccountService {
   async savePersonalDetails(reqBody: IPersonalDetails) {
     return PersonalDetail.create({ ...reqBody });
+  }
+
+  async saveCorporateDetails(reqBody: ICorporateDetails) {
+    return CorporateDetail.create({ ...reqBody });
   }
 
   async saveContactDetails(reqBody: IContactDetails) {
@@ -116,6 +128,7 @@ class AccountService {
   async saveSignatories(param: ISignatories) {
     const { userId, signatory, reqFile } = param;
     const signatoryUploads: Array<string> = [];
+    const signatoryObj: Array<object> = [];
     // authorizedSigature;
 
     reqFile.forEach((file) => {
@@ -124,16 +137,18 @@ class AccountService {
 
     // console.log(signatoryUploads);
     signatory.forEach(async (elem, index) => {
-      SignatoryMandate.create({
+      let sig = await SignatoryMandate.create({
         userId,
         name: elem.name,
         designation: elem.designation,
         class: elem.class,
         signature: await getItemWithIndex(signatoryUploads, index),
       });
+
+      signatoryObj.push(sig.dataValues);
     });
 
-    return;
+    return signatoryObj;
   }
 
   async saveAuthorizedPersons(param: IAuthorizedPersons) {
@@ -141,13 +156,15 @@ class AccountService {
     const authorizedSignatures: Array<string> = [];
     const authorizedPassport: Array<string> = [];
 
+    const authPersObj: Array<object> = [];
+
     reqFile.forEach((file) => {
       if (file.fieldname.includes("authorizedSignature")) authorizedSignatures.push(file.filename);
       if (file.fieldname.includes("authorizedPassport")) authorizedPassport.push(file.filename);
     });
 
     authorizedPerson.forEach(async (elem, index) => {
-      AuthorizedPerson.create({
+      let auth = await AuthorizedPerson.create({
         userId,
         address: elem.address,
         bvn: elem.bvn,
@@ -158,35 +175,206 @@ class AccountService {
         passport: await getItemWithIndex(authorizedPassport, index),
         signature: await getItemWithIndex(authorizedSignatures, index),
       });
+
+      authPersObj.push(auth.dataValues);
     });
 
-    return;
+    return authPersObj;
+  }
+
+  async saveAccountType(userId: number, accountType: string, tableRef: string) {
+    return AccountType.create({ accountType, userId, tableRef });
   }
 
   async createIndividualAccount(reqBody: IIndividualAccount, reqFile: any) {
     const user = await this.savePersonalDetails(reqBody);
     const userId = user.id;
 
-    await this.saveContactDetails({ ...reqBody, userId });
-    await this.saveEmploymentDetails({ ...reqBody, userId });
-    await this.saveBankDetails({ ...reqBody, userId });
-    await this.saveNextOfKinDetails({ ...reqBody, userId });
-    await this.saveInvestmentDetails({ ...reqBody, userId });
-    await this.savePEPDetails({ ...reqBody, userId });
-    await this.saveKycFileNames({ userId, reqFile });
-    await this.saveSignatories({ userId, signatory: reqBody.signatory, reqFile });
-    await this.saveAuthorizedPersons({
+    const contactDetails = await this.saveContactDetails({ ...reqBody, userId });
+    const employmentDetails = await this.saveEmploymentDetails({ ...reqBody, userId });
+    const bankDetails = await this.saveBankDetails({ ...reqBody, userId });
+    const nokDetails = await this.saveNextOfKinDetails({ ...reqBody, userId });
+    const investDetails = await this.saveInvestmentDetails({ ...reqBody, userId });
+    const pepDetails = await this.savePEPDetails({ ...reqBody, userId });
+    const kycDocs = await this.saveKycFileNames({ userId, reqFile });
+    const signatories = await this.saveSignatories({
+      userId,
+      signatory: reqBody.signatory,
+      reqFile,
+    });
+    const authPersonnels = await this.saveAuthorizedPersons({
       userId,
       authorizedPerson: reqBody.authorizedPerson,
       reqFile,
     });
+    const accountType = await this.saveAccountType(userId, reqBody.accountType, "personal_details");
+
+    const dataObj = {
+      accountType: accountType.dataValues.accountType,
+      corporateDetails: user.dataValues,
+      contactDetails: contactDetails.dataValues,
+      employmentDetails: employmentDetails.dataValues,
+      nokDetails: nokDetails.dataValues,
+      investDetails: investDetails.dataValues,
+      pepDetails: pepDetails.dataValues,
+      bankDetails: bankDetails.dataValues,
+      kycDocs: kycDocs.dataValues,
+      signatories,
+      authPersonnels: authPersonnels,
+    };
+
+    const generatedPdf = await pdfService.generatePdf("corporate.temp", dataObj);
+
+    const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
+    const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
+
+    await mailService.sendMail({
+      from: "FCSL Asset Mgt <test@fcslng.com>",
+      to: "kingsleyaham6@gmail.com",
+      subject: `${dataObj.accountType} account - ${user.firstName} ${user.surname}`,
+      text: `Account was successfullly created for ${user.firstName} ${user.surname}`,
+      attachments: [
+        {
+          filename: generatedPdf,
+          path: `${pdfPath}/${generatedPdf}`,
+        },
+        { path: `${uploadsPath}/${dataObj.kycDocs.signature}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+      ],
+    });
+
+    console.log(dataObj);
 
     return { message: "account created successfully" };
   }
 
-  async createJointAccount(reqBody: any) {}
+  async createJointAccount(reqBody: IJointAccount, reqFile: any) {
+    const user = await this.savePersonalDetails(reqBody);
+    const userId = user.id;
 
-  async createCorporateAccount(reqBody: any) {}
+    const contactDetails = await this.saveContactDetails({ ...reqBody, userId });
+    const employmentDetails = await this.saveEmploymentDetails({ ...reqBody, userId });
+    const bankDetails = await this.saveBankDetails({ ...reqBody, userId });
+    const nokDetails = await this.saveNextOfKinDetails({ ...reqBody, userId });
+    const investDetails = await this.saveInvestmentDetails({ ...reqBody, userId });
+    const pepDetails = await this.savePEPDetails({ ...reqBody, userId });
+    const kycDocs = await this.saveKycFileNames({ userId, reqFile });
+    const signatories = await this.saveSignatories({
+      userId,
+      signatory: reqBody.signatory,
+      reqFile,
+    });
+    const authPersonnels = await this.saveAuthorizedPersons({
+      userId,
+      authorizedPerson: reqBody.authorizedPerson,
+      reqFile,
+    });
+    const accountType = await this.saveAccountType(userId, reqBody.accountType, "personal_details");
+
+    const dataObj = {
+      accountType: accountType.dataValues.accountType,
+      corporateDetails: user.dataValues,
+      contactDetails: contactDetails.dataValues,
+      employmentDetails: employmentDetails.dataValues,
+      nokDetails: nokDetails.dataValues,
+      investDetails: investDetails.dataValues,
+      pepDetails: pepDetails.dataValues,
+      bankDetails: bankDetails.dataValues,
+      kycDocs: kycDocs.dataValues,
+      signatories,
+      authPersonnels: authPersonnels,
+    };
+
+    const generatedPdf = await pdfService.generatePdf("corporate.temp", dataObj);
+
+    const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
+    const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
+
+    await mailService.sendMail({
+      from: "FCSL Asset Mgt <test@fcslng.com>",
+      to: "kingsleyaham6@gmail.com",
+      subject: `${dataObj.accountType} account - ${user.firstName} ${user.surname}`,
+      text: `Account was successfullly created for ${user.firstName} ${user.surname}`,
+      attachments: [
+        {
+          filename: generatedPdf,
+          path: `${pdfPath}/${generatedPdf}`,
+        },
+        { path: `${uploadsPath}/${dataObj.kycDocs.signature}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+      ],
+    });
+
+    console.log(dataObj);
+
+    return { message: "account created successfully" };
+  }
+
+  async createCorporateAccount(reqBody: ICorporateAccount, reqFile: any) {
+    const user = await this.saveCorporateDetails(reqBody);
+    const userId = user.id;
+
+    const contactDetails = await this.saveContactDetails({ ...reqBody, userId });
+    const investDetails = await this.saveInvestmentDetails({ ...reqBody, userId });
+    const bankDetails = await this.saveBankDetails({ ...reqBody, userId });
+    const kycDocs = await this.saveKycFileNames({ userId, reqFile });
+    const signatories = await this.saveSignatories({
+      userId,
+      signatory: reqBody.signatory,
+      reqFile,
+    });
+    const authPersonnels = await this.saveAuthorizedPersons({
+      userId,
+      authorizedPerson: reqBody.authorizedPerson,
+      reqFile,
+    });
+    const accountType = await this.saveAccountType(
+      userId,
+      reqBody.accountType,
+      "corporate_details"
+    );
+
+    const dataObj = {
+      accountType: reqBody.accountType,
+      corporateDetails: user.dataValues,
+      contactDetails: contactDetails.dataValues,
+      investDetails: investDetails.dataValues,
+      bankDetails: bankDetails.dataValues,
+      kycDocs: kycDocs.dataValues,
+      signatories,
+      authPersonnels: authPersonnels,
+    };
+
+    const generatedPdf = await pdfService.generatePdf("corporate.temp", dataObj);
+
+    const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
+    const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
+
+    await mailService.sendMail({
+      from: "FCSL Asset Mgt <test@fcslng.com>",
+      to: "kingsleyaham6@gmail.com",
+      subject: `${dataObj.accountType} account - ${user.companyName}`,
+      text: `Account was successfullly created for ${user.companyName}`,
+      attachments: [
+        {
+          filename: generatedPdf,
+          path: `${pdfPath}/${generatedPdf}`,
+        },
+        { path: `${uploadsPath}/${dataObj.kycDocs.signature}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
+        { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+      ],
+    });
+
+    console.log(dataObj);
+
+    return { message: "account created successfully" };
+  }
 }
 
 export const accountService = new AccountService();

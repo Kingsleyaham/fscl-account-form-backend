@@ -1,0 +1,286 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Corporate Account Opening Form</title>
+  </head>
+  <body>
+    <div class="bg-white text-gray-900">
+      <div class="logo bg-[#ecebf3] flex items-center justify-between p-3">
+        <img
+          src="https://www.fcslng.com/wp-content/themes/fsclwordtheme/assets/images/fscllogo.png"
+          alt="site logo"
+          class="w-[20%]"
+        />
+        <h1 class="font-bold text-slate-900 text-xl uppercase">
+          <span>{{accountType}} </span>
+          Account Opening Form
+        </h1>
+      </div>
+
+      <div class="p-5">
+        {{! {/* corporate details */} }}
+        <div class="py-2">
+          <div class="header bg-[#c7d6d5] px-2 py-1">
+            <h2 class="font-bold">CORPORATE DETAILS</h2>
+          </div>
+          <div class="px-3 py-2">
+            <div class="">
+              <div class="flex items-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Company Name:</p>
+                  <p class="pl-3">{{corporateDetails.companyName}}</p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">RC No:</p>
+                  <p class="pl-3">{{corporateDetails.rcNum}}</p>
+                </div>
+              </div>
+              <div class="flex item-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Date of Inc: </p>
+                  <p class="pl-3">{{corporateDetails.dateOfInc}}</p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">TIN: </p>
+                  <p class="pl-3">{{corporateDetails.tin}}</p>
+                </div>
+              </div>
+              <div class="flex">
+                <p class="font-semibold">Account No: </p>
+                <p class="pl-3">{{corporateDetails.corpAccountNumber}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{! {/* contact details */} }}
+        <div class="py-2">
+          <div class="header bg-[#c7d6d5] px-2 py-1">
+            <h2 class="font-bold">CONTACT DETAILS</h2>
+          </div>
+          <div class="px-3 py-2">
+            <div class="">
+              <div class="flex items-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Contact Address:</p>
+                  <p class="pl-3">{{contactDetails.address}}</p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">Postal Address:</p>
+                  <p class="pl-3">{{contactDetails.postalAddress}}</p>
+                </div>
+              </div>
+              <div class="flex item-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Mobile No: </p>
+                  <p class="pl-3">{{contactDetails.mobileNumber}}</p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">Email Address: </p>
+                  <p class="pl-3">{{contactDetails.email}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{! {/* Authorized Persons */} }}
+        <div class="py-2">
+          <div class="header bg-[#c7d6d5] px-2 py-1">
+            <h2 class="font-bold">AUTHORIZED PERSONS</h2>
+          </div>
+          <div class="px-3 py-2">
+            {{#each authPersonnels as |authPers|}}<div class="border-b py-2">
+                <div class="flex items-center text-base py-1">
+                  <div class="flex">
+                    <p class="font-semibold">Signatory Name:</p>
+                    <p class="pl-3">{{authPers.name}}</p>
+                  </div>
+                  <div class="flex pl-5">
+                    <p class="font-semibold">Mobile No:</p>
+                    <p class="pl-3">{{authPers.mobileNum}}</p>
+                  </div>
+                </div>
+                <div class="flex item-center text-base py-1">
+                  <div class="flex">
+                    <p class="font-semibold">Email Address: </p>
+                    <p class="pl-3">{{authPers.email}}</p>
+                  </div>
+                  <div class="flex pl-5">
+                    <p class="font-semibold">Bank Verification No: </p>
+                    <p class="pl-3">{{authPers.bvn}}</p>
+                  </div>
+                </div>
+                <div class="flex">
+                  <p class="font-semibold">Contact Address: </p>
+                  <p class="pl-3">
+                    {{authPers.address}}
+                  </p>
+                </div>
+                <div class="flex item-center text-base py-1">
+                  <div class="flex">
+                    <p class="font-semibold">Means of Identification: </p>
+                    <p class="pl-3">{{authPers.meansOfIdentification}}</p>
+                  </div>
+                  <div class="flex pl-5">
+                    <p class="font-semibold">Passport: </p>
+                    <p class="pl-3">
+                      {{authPers.passport}}
+                    </p>
+                  </div>
+                  <div class="flex pl-5">
+                    <p class="font-semibold">Signature: </p>
+                    <p class="pl-3">{{authPers.signature}}</p>
+                  </div>
+                </div>
+              </div>{{/each}}
+
+          </div>
+        </div>
+        {{! {/* Investment Details */} }}
+        <div class="py-2">
+          <div class="header bg-[#c7d6d5] px-2 py-1">
+            <h2 class="font-bold">INVESTMENT DETAILS</h2>
+          </div>
+          <div class="px-3 py-2">
+            <div class="">
+              <div class="flex items-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Contact Address:</p>
+                  <p class="pl-3">{{investDetails.address}}</p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">Postal Address:</p>
+                  <p class="pl-3">{{investDetails.postalAddress}}</p>
+                </div>
+              </div>
+              <div class="flex item-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Mobile No: </p>
+                  <p class="pl-3">{{investDetails.mobileNum}}</p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">Email Address: </p>
+                  <p class="pl-3">{{investDetails.email}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{! {/* Bank Account Details */} }}
+        <div class="py-2">
+          <div class="header bg-[#c7d6d5] px-2 py-1">
+            <h2 class="font-bold">BANK ACCOUNT DETAILS</h2>
+          </div>
+          <div class="px-3 py-2">
+            <div class="">
+              <div class="flex items-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Account Name:</p>
+                  <p class="pl-3">{{bankDetails.accountName}}</p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">Bank Name</p>
+                  <p class="pl-3">{{bankDetails.bank}}</p>
+                </div>
+              </div>
+              <div class="flex item-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Account No: </p>
+                  <p class="pl-3">{{bankDetails.accountNumber}}</p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">Account Openning Date: </p>
+                  <p class="pl-3">{{bankDetails.accountOpenDate}}</p>
+                </div>
+              </div>
+
+              <div class="flex">
+                <p class="font-semibold">Bank Verification No: </p>
+                <p class="pl-3">{{bankDetails.bvn}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{! {/* Signatory Mandate */} }}
+        <div class="py-2">
+          <div class="header bg-[#c7d6d5] px-2 py-1">
+            <h2 class="font-bold">SIGNATORY MANDATE</h2>
+          </div>
+          <div class="px-3 py-2">
+            {{#each signatories as |signatory|}}
+              <div class="border-b py-2">
+                <div class="flex items-center text-base py-1">
+                  <div class="flex">
+                    <p class="font-semibold">Signatory Name:</p>
+                    <p class="pl-3">{{signatory.name}}</p>
+                  </div>
+                  <div class="flex pl-5">
+                    <p class="font-semibold">Designation:</p>
+                    <p class="pl-3">{{signatory.designation}}</p>
+                  </div>
+                </div>
+                <div class="flex item-center text-base py-1">
+                  <div class="flex">
+                    <p class="font-semibold">Signatory Class: </p>
+                    <p class="pl-3 uppercase">{{signatory.class}}</p>
+                  </div>
+                  <div class="flex pl-5">
+                    <p class="font-semibold">Signature: </p>
+                    <p class="pl-3">
+                      {{signatory.signature}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            {{/each}}
+          </div>
+
+        </div>
+        {{! Kyc Documents }}
+        <div class="py-2">
+          <div class="header bg-[#c7d6d5] px-2 py-1">
+            <h2 class="font-bold">KYC DOCUMENTS</h2>
+          </div>
+          <div class="px-3 py-2">
+            <div class="">
+              <div class="flex items-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold">Utility Bill:</p>
+                  <p class="pl-3">
+                    {{kycDocs.utilityBill}}
+                  </p>
+                </div>
+                <div class="flex pl-5">
+                  <p class="font-semibold">Form of Identification:</p>
+                  <p class="pl-3">
+                    {{kycDocs.identityUpload}}
+                  </p>
+
+                </div>
+
+              </div>
+              <div class="flex items-center text-base py-1">
+                <div class="flex">
+                  <p class="font-semibold pl-5">Signature: </p>
+                  <p class="pl-3">
+                    {{kycDocs.signature}}
+                  </p>
+                </div>
+                <div class="flex">
+                  <p class="font-semibold pl-5">Passport Photograph: </p>
+                  <p class="pl-3">
+                    {{kycDocs.passport}}
+                  </p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -6,7 +6,6 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
-import PersonalDetail from "./personalDetail.model";
 
 class AuthorizedPerson extends Model<
   InferAttributes<AuthorizedPerson>,
@@ -33,10 +32,6 @@ AuthorizedPerson.init(
     userId: {
       type: DataTypes.INTEGER,
       field: "user_id",
-      references: {
-        model: PersonalDetail,
-        key: "id",
-      },
     },
     name: { type: DataTypes.STRING, allowNull: false },
     address: { type: DataTypes.TEXT, allowNull: false },

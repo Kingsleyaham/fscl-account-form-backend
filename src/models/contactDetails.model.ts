@@ -6,7 +6,6 @@ import {
   InferCreationAttributes,
   Model,
 } from "sequelize";
-import PersonalDetail from "./personalDetail.model";
 
 class ContactDetail extends Model<
   InferAttributes<ContactDetail>,
@@ -30,10 +29,6 @@ ContactDetail.init(
     userId: {
       type: DataTypes.INTEGER,
       field: "user_id",
-      references: {
-        model: PersonalDetail,
-        key: "id",
-      },
     },
     address: {
       type: DataTypes.TEXT,
@@ -51,7 +46,6 @@ ContactDetail.init(
       field: "mobile_number",
     },
     email: { type: DataTypes.STRING, allowNull: false },
-
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   },
