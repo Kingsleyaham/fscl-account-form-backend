@@ -28,6 +28,7 @@ import AccountType from "../models/accountType.model";
 import CorporateDetail from "../models/corporateDetail.model";
 import { ICorporateDetails } from "../interfaces/corporateDetails.interface";
 import path from "path";
+import { mailConfig } from "../config";
 
 class AccountService {
   async savePersonalDetails(reqBody: IPersonalDetails) {
@@ -242,8 +243,8 @@ class AccountService {
     );
 
     await mailService.sendMail({
-      from: "FCSL Asset Mgt <test@fcslng.com>",
-      to: "kingsleyaham6@gmail.com",
+      from: `FCSL Asset Mgt <${mailConfig.mailFrom}>`,
+      to: mailConfig.mailTo,
       subject: `${dataObj.accountType} account - ${user.firstName} ${user.surname}`,
       text: `Account was successfullly created for ${user.firstName} ${user.surname}`,
       attachments: [
@@ -320,8 +321,8 @@ class AccountService {
     );
 
     await mailService.sendMail({
-      from: "FCSL Asset Mgt <test@fcslng.com>",
-      to: "kingsleyaham6@gmail.com",
+      from: `FCSL Asset Mgt <${mailConfig.mailFrom}>`,
+      to: mailConfig.mailTo,
       subject: `${dataObj.accountType} account - ${user.firstName} ${user.surname}`,
       text: `Account was successfullly created for ${user.firstName} ${user.surname}`,
       attachments: [
@@ -394,8 +395,8 @@ class AccountService {
     );
 
     await mailService.sendMail({
-      from: "FCSL Asset Mgt <test@fcslng.com>",
-      to: "kingsleyaham6@gmail.com",
+      from: `FCSL Asset Mgt <${mailConfig.mailFrom}>`,
+      to: mailConfig.mailTo,
       subject: `${dataObj.accountType} account - ${user.companyName}`,
       text: `Account was successfullly created for ${user.companyName}`,
       attachments: [

@@ -11,7 +11,9 @@ class MailService {
   }
 
   async sendMail(mailObj: ISendMail) {
-    const transporter = await this.createTransport(mailConfig);
+    const { auth, host, port, secure } = mailConfig;
+    
+    const transporter = await this.createTransport({ host, port, secure, auth });
 
     const { from, to, subject, attachments, html, text } = mailObj;
 
