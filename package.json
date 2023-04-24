@@ -21,8 +21,7 @@
     "@types/nodemailer": "^6.4.7",
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.22",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -39,6 +38,7 @@
     "nodemailer": "^6.9.1",
     "puppeteer": "^19.10.1",
     "sequelize": "^6.31.0",
+    "typescript": "^5.0.4",
     "yup": "^1.1.0"
   }
 }
