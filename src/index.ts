@@ -21,7 +21,7 @@ app.use(cors()); // Allows incoming requests from any ip
 // routes
 app.use("/api", router);
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   // console.log("welcome to account page api");
   res.status(200).json({ success: 1, message: "connected successfully" });
 });
