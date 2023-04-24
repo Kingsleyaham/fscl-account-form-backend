@@ -12,6 +12,7 @@ class PersonalDetail extends Model<
   InferCreationAttributes<PersonalDetail>
 > {
   declare id: CreationOptional<number>;
+  declare title: string;
   declare firstName: string;
   declare middleName: string | null;
   declare surname: string;
@@ -33,6 +34,10 @@ PersonalDetail.init(
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     firstName: {
       type: DataTypes.STRING,

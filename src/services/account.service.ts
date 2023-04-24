@@ -211,7 +211,7 @@ class AccountService {
 
     const dataObj = {
       accountType: accountType.dataValues.accountType,
-      corporateDetails: user.dataValues,
+      personalDetails: user.dataValues,
       contactDetails: contactDetails.dataValues,
       employmentDetails: employmentDetails.dataValues,
       nokDetails: nokDetails.dataValues,
@@ -223,10 +223,23 @@ class AccountService {
       authPersonnels: authPersonnels,
     };
 
-    const generatedPdf = await pdfService.generatePdf("corporate.temp", dataObj);
+    const generatedPdf = await pdfService.generatePdf("individual.temp", dataObj);
+    const extraAttachment: Array<any> = [];
 
     const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
     const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
+
+    // add authpersonnels files as attachments
+    dataObj.authPersonnels.forEach((personnel: any) => {
+      extraAttachment.push({ path: `${uploadsPath}/${personnel.passport}` });
+      extraAttachment.push({ path: `${uploadsPath}/${personnel.signature}` });
+    });
+
+    // add signatories uploads as attachments
+
+    dataObj.signatories.forEach((signatory: any) =>
+      extraAttachment.push({ path: `${uploadsPath}/${signatory.signature}` })
+    );
 
     await mailService.sendMail({
       from: "FCSL Asset Mgt <test@fcslng.com>",
@@ -242,6 +255,7 @@ class AccountService {
         { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
         { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
         { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+        ...extraAttachment,
       ],
     });
 
@@ -275,7 +289,7 @@ class AccountService {
 
     const dataObj = {
       accountType: accountType.dataValues.accountType,
-      corporateDetails: user.dataValues,
+      personalDetails: user.dataValues,
       contactDetails: contactDetails.dataValues,
       employmentDetails: employmentDetails.dataValues,
       nokDetails: nokDetails.dataValues,
@@ -287,10 +301,23 @@ class AccountService {
       authPersonnels: authPersonnels,
     };
 
-    const generatedPdf = await pdfService.generatePdf("corporate.temp", dataObj);
+    const generatedPdf = await pdfService.generatePdf("joint.temp", dataObj);
+    const extraAttachment: Array<any> = [];
 
     const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
     const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
+
+    // add authpersonnels files as attachments
+    dataObj.authPersonnels.forEach((personnel: any) => {
+      extraAttachment.push({ path: `${uploadsPath}/${personnel.passport}` });
+      extraAttachment.push({ path: `${uploadsPath}/${personnel.signature}` });
+    });
+
+    // add signatories uploads as attachments
+
+    dataObj.signatories.forEach((signatory: any) =>
+      extraAttachment.push({ path: `${uploadsPath}/${signatory.signature}` })
+    );
 
     await mailService.sendMail({
       from: "FCSL Asset Mgt <test@fcslng.com>",
@@ -306,10 +333,9 @@ class AccountService {
         { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
         { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
         { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+        ...extraAttachment,
       ],
     });
-
-    console.log(dataObj);
 
     return { message: "account created successfully" };
   }
@@ -346,13 +372,26 @@ class AccountService {
       bankDetails: bankDetails.dataValues,
       kycDocs: kycDocs.dataValues,
       signatories,
-      authPersonnels: authPersonnels,
+      authPersonnels,
     };
 
     const generatedPdf = await pdfService.generatePdf("corporate.temp", dataObj);
+    const extraAttachment: Array<any> = [];
 
     const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
     const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
+
+    // add authpersonnels files as attachments
+    dataObj.authPersonnels.forEach((personnel: any) => {
+      extraAttachment.push({ path: `${uploadsPath}/${personnel.passport}` });
+      extraAttachment.push({ path: `${uploadsPath}/${personnel.signature}` });
+    });
+
+    // add signatories uploads as attachments
+
+    dataObj.signatories.forEach((signatory: any) =>
+      extraAttachment.push({ path: `${uploadsPath}/${signatory.signature}` })
+    );
 
     await mailService.sendMail({
       from: "FCSL Asset Mgt <test@fcslng.com>",
@@ -368,10 +407,9 @@ class AccountService {
         { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
         { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
         { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+        ...extraAttachment,
       ],
     });
-
-    console.log(dataObj);
 
     return { message: "account created successfully" };
   }

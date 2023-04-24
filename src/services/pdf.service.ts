@@ -32,7 +32,7 @@ class PDFService {
       path: pdfPath,
       format: "A4",
       printBackground: true,
-      margin: { bottom: 50 },
+      margin: { bottom: 50, top: 20 },
     });
 
     await browser.close();

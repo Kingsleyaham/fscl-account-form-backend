@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>My Document</title>
+    <title>{{acountType}} Account Opening Form</title>
   </head>
 
   <body>
@@ -33,69 +33,66 @@
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
                     <p class="font-semibold">Title:</p>
-                    <p class="pl-3">Mr.</p>
+                    <p class="pl-3">{{personalDetails.title}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">First Name:</p>
-                    <p class="pl-3">Michael</p>
+                    <p class="pl-3">{{personalDetails.firstName}}</p>
                   </div>
                 </div>
                 <div class="flex item-center text-base py-1">
                   <div class="flex">
                     <p class="font-semibold">Other Name: </p>
-                    <p class="pl-3">Nzubechukwu</p>
+                    <p class="pl-3">{{{personalDetails.middleName}}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Surname </p>
-                    <p class="pl-3">Okerekemmadu</p>
+                    <p class="pl-3">{{personalDetails.surname}}</p>
                   </div>
                 </div>
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
                     <p class="font-semibold">Date of Birth:</p>
-                    <p class="pl-3">12th October, 1998</p>
+                    <p class="pl-3">{{personalDetails.dateOfBirth}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Marital Status:</p>
-                    <p class="pl-3">Divorced</p>
+                    <p class="pl-3">{{personalDetails.maritalStatus}}</p>
                   </div>
                 </div>
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
                     <p class="font-semibold">Mother's Maiden Name:</p>
-                    <p class="pl-3">Okafor Chineye Nnamdi</p>
+                    <p class="pl-3">{{personalDetails.motherMaidenName}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Gender:</p>
-                    <p class="pl-3">Female</p>
+                    <p class="pl-3">{{personalDetails.gender}}</p>
                   </div>
                 </div>
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
                     <p class="font-semibold">Profession:</p>
-                    <p class="pl-3">Medical Practioner</p>
+                    <p class="pl-3">{{personalDetails.profession}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Country:</p>
-                    <p class="pl-3">Nigeria</p>
+                    <p class="pl-3">{{personalDetails.country}}</p>
                   </div>
                 </div>
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
                     <p class="font-semibold">State of Origin:</p>
-                    <p class="pl-3">Enugu</p>
+                    <p class="pl-3">{{personalDetails.stateOfOrigin}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Local Government Area:</p>
-                    <p class="pl-3">Ezeagu</p>
+                    <p class="pl-3">{{personalDetails.lga}}</p>
                   </div>
                 </div>
               </div>
               <div class="w-[25%] p-1 border">
-                <img
-                  src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.wisegeek.com%2Fpassport-photo.jpg&f=1&nofb=1&ipt=a2d7440dc5a16756a97e505ba8b95fe0a2380f8284fcf228567e41b37ecf9b26&ipo=images"
-                  alt="passport"
-                />
+                <img src="/src/assets/uploads/{{kycDocs.passport}}" alt="passport" />
               </div>
             </div>
           </div>
@@ -139,28 +136,28 @@
               <div class="flex items-center text-base py-1">
                 <div class="flex">
                   <p class="font-semibold">Employment Status:</p>
-                  <p class="pl-3">Self-Employed</p>
+                  <p class="pl-3">{{employmentDetails.employmentStatus}}</p>
                 </div>
                 <div class="flex pl-5">
                   <p class="font-semibold">Employer's Name:</p>
-                  <p class="pl-3">Mr. Michael Ejeana</p>
+                  <p class="pl-3">{{employmentDetails.employerName}}</p>
                 </div>
               </div>
               <div class="flex item-center text-base py-1">
                 <div class="flex">
                   <p class="font-semibold">Industry: </p>
-                  <p class="pl-3">Mechanical Field</p>
+                  <p class="pl-3">{{employmentDetails.industry}}</p>
                 </div>
 
                 <div class="flex pl-5">
                   <p class="font-semibold">Employment Date: </p>
-                  <p class="pl-3">19th November, 1997</p>
+                  <p class="pl-3">{{employmentDetails.employmentDate}}</p>
                 </div>
               </div>
               <div class="flex item-center text-base py-1">
                 <div class="flex">
                   <p class="font-semibold">Employer's Address: </p>
-                  <p class="pl-3">No. 5 Ejenana Estate opp anambra enugu state</p>
+                  <p class="pl-3">{{employmentDetails.employerAddress}}</p>
                 </div>
               </div>
             </div>
@@ -176,31 +173,31 @@
               <div class="flex items-center text-base py-1">
                 <div class="flex">
                   <p class="font-semibold">Title:</p>
-                  <p class="pl-3">Mr.</p>
+                  <p class="pl-3">{{nokDetails.title}}</p>
                 </div>
                 <div class="flex pl-5">
                   <p class="font-semibold">Full Name:</p>
-                  <p class="pl-3">Michael Okeke Ejeana</p>
+                  <p class="pl-3">{{nokDetails.name}}</p>
                 </div>
                 <div class="flex pl-5">
                   <p class="font-semibold">Gender:</p>
-                  <p class="pl-3">Female</p>
+                  <p class="pl-3">{{nokDetails.gender}}</p>
                 </div>
               </div>
               <div class="flex item-center text-base py-1">
                 <div class="flex">
                   <p class="font-semibold">Relationship: </p>
-                  <p class="pl-3">Uncle</p>
+                  <p class="pl-3">{{nokDetails.relationship}}</p>
                 </div>
                 <div class="flex pl-5">
                   <p class="font-semibold">Mobile No: </p>
-                  <p class="pl-3">+2347066554412</p>
+                  <p class="pl-3">{{nokDetails.mobileNum}}</p>
                 </div>
               </div>
               <div class="flex item-center text-base py-1">
                 <div class="flex">
                   <p class="font-semibold">Contact Address: </p>
-                  <p class="pl-3">No. 54 opp close anambra enugu state</p>
+                  <p class="pl-3">{{nokDetails.address}}</p>
                 </div>
               </div>
             </div>
@@ -214,20 +211,18 @@
             <div class="">
               <div class="flex">
                 <p class="font-semibold">Are you a Politically Exposed Person:</p>
-                <p class="pl-3">yes</p>
+                <p class="pl-3">{{pepDetails.status}}</p>
               </div>
               <div class="flex">
                 <p class="font-semibold">Details: </p>
                 <p class="pl-3">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti a itaque
-                  dolorum. Ex assumenda perspiciatis asperiores amet animi in cupiditate harum vero,
-                  quibusdam commodi! Perspiciatis veritatis, nulla nemo odit, dolores et dolorum sit
-                  eius, sapiente ipsa iure recusandae repellat obcaecati.
+                  {{pepDetails.details}}
                 </p>
               </div>
             </div>
           </div>
         </div>
+        {{! {/* Authorized Persons */} }}
         <div class="py-2">
           <div class="header bg-[#c7d6d5] px-2 py-1">
             <h2 class="font-bold">AUTHORIZED PERSONS</h2>
@@ -260,21 +255,20 @@
                     {{authPers.address}}
                   </p>
                 </div>
-                <div class="flex item-center text-base py-1">
-                  <div class="flex">
-                    <p class="font-semibold">Means of Identification: </p>
-                    <p class="pl-3">{{authPers.meansOfIdentification}}</p>
-                  </div>
-                  <div class="flex pl-5">
-                    <p class="font-semibold">Passport: </p>
-                    <p class="pl-3">
-                      {{authPers.passport}}
-                    </p>
-                  </div>
-                  <div class="flex pl-5">
-                    <p class="font-semibold">Signature: </p>
-                    <p class="pl-3">{{authPers.signature}}</p>
-                  </div>
+
+                <div class="flex">
+                  <p class="font-semibold">Means of Identification: </p>
+                  <p class="pl-3">{{authPers.meansOfIdentification}}</p>
+                </div>
+                <div class="flex">
+                  <p class="font-semibold">Passport: </p>
+                  <p class="pl-3">
+                    {{authPers.passport}}
+                  </p>
+                </div>
+                <div class="flex">
+                  <p class="font-semibold">Signature: </p>
+                  <p class="pl-3">{{authPers.signature}}</p>
                 </div>
               </div>{{/each}}
 
@@ -376,45 +370,42 @@
             {{/each}}
           </div>
         </div>
+        {{! Kyc Documents }}
         <div class="py-2">
           <div class="header bg-[#c7d6d5] px-2 py-1">
             <h2 class="font-bold">KYC DOCUMENTS</h2>
           </div>
           <div class="px-3 py-2">
             <div class="">
-              <div class="flex items-center text-base py-1">
-                <div class="flex">
-                  <p class="font-semibold">Utility Bill:</p>
-                  <p class="pl-3">
-                    {{kycDocs.utilityBill}}
-                  </p>
-                </div>
-                <div class="flex pl-5">
-                  <p class="font-semibold">Form of Identification:</p>
-                  <p class="pl-3">
-                    {{kycDocs.identityUpload}}
-                  </p>
-
-                </div>
+              <div class="flex">
+                <p class="font-semibold">Utility Bill:</p>
+                <p class="pl-3">
+                  {{kycDocs.utilityBill}}
+                </p>
+              </div>
+              <div class="flex">
+                <p class="font-semibold">Form of Identification:</p>
+                <p class="pl-3">
+                  {{kycDocs.identityUpload}}
+                </p>
 
               </div>
-              <div class="flex items-center text-base py-1">
-                <div class="flex">
-                  <p class="font-semibold pl-5">Signature: </p>
-                  <p class="pl-3">
-                    {{kycDocs.signature}}
-                  </p>
-                </div>
-                <div class="flex">
-                  <p class="font-semibold pl-5">Passport Photograph: </p>
-                  <p class="pl-3">
-                    {{kycDocs.passport}}
-                  </p>
-
-                </div>
+              <div class="flex">
+                <p class="font-semibold">Signature: </p>
+                <p class="pl-3">
+                  {{kycDocs.signature}}
+                </p>
               </div>
+              <div class="flex">
+                <p class="font-semibold">Passport Photograph: </p>
+                <p class="pl-3">
+                  {{kycDocs.passport}}
+                </p>
+
+              </div>
+
             </div>
-          </div>s
+          </div>
         </div>
       </div>
     </div>
