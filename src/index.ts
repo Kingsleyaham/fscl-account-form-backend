@@ -30,11 +30,11 @@ app.get("/", (req, res) => {
 app.listen(appConfig.PORT, async () => {
   console.log(`server running on http://${appConfig.HOST}:${appConfig.PORT}`);
 
-  // try {
-  //   await sequelize.authenticate();
-  //   await sequelize.sync({ alter: true });
-  //   console.log("Connection to database successful.");
-  // } catch (error) {
-  //   console.error("Unable to connect to the database:", error);
-  // }
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync({ alter: true });
+    console.log("Connection to database successful.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
 });
