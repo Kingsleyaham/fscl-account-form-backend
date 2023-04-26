@@ -1,3 +1,4 @@
+import { IJointPersAcccount } from "./../interfaces/jointPersDetails.interface";
 import { pdfService } from "./pdf.service";
 import { mailService } from "./mail.service";
 import { ICorporateAccount } from "./../interfaces/corporateAccount.interface";
@@ -26,6 +27,7 @@ import SignatoryMandate from "../models/signatoryMandate.model";
 import AuthorizedPerson from "../models/authorizedPerson.model";
 import AccountType from "../models/accountType.model";
 import CorporateDetail from "../models/corporateDetail.model";
+import JointPersDetail from "../models/jointPersDetail.model";
 import { ICorporateDetails } from "../interfaces/corporateDetails.interface";
 import path from "path";
 import { mailConfig } from "../config";
@@ -33,6 +35,33 @@ import { mailConfig } from "../config";
 class AccountService {
   async savePersonalDetails(reqBody: IPersonalDetails) {
     return PersonalDetail.create({ ...reqBody });
+  }
+
+  async savejointPersonalDetails(reqBody: IJointPersAcccount) {
+    const { personalDetails } = reqBody;
+    const persDetailsObj: Array<IPersonalDetails> = [];
+
+    personalDetails.forEach(async (elem, index) => {
+      let detail = await JointPersDetail.create({
+        country: elem.country,
+        dateOfBirth: elem.dateOfBirth,
+        firstName: elem.firstName,
+        middleName: elem.middleName,
+        surname: elem.surname,
+        gender: elem.gender,
+        lga: elem.lga,
+        maritalStatus: elem.maritalStatus,
+        motherMaidenName: elem.motherMaidenName,
+        profession: elem.profession,
+        stateOfOrigin: elem.stateOfOrigin,
+        title: elem.title,
+        // userId:
+      });
+
+      persDetailsObj.push(detail.dataValues);
+    });
+
+    return persDetailsObj;
   }
 
   async saveCorporateDetails(reqBody: ICorporateDetails) {
@@ -266,10 +295,11 @@ class AccountService {
   }
 
   async createJointAccount(reqBody: IJointAccount, reqFile: any) {
-    const user = await this.savePersonalDetails(reqBody);
-    const userId = user.id;
+    const contactDetails = await this.saveContactDetails({ ...reqBody, userId: 0 });
+    const userId = contactDetails.id;
 
-    const contactDetails = await this.saveContactDetails({ ...reqBody, userId });
+    const personalDetails = await this.savejointPersonalDetails({ ...reqBody, userId });
+
     const employmentDetails = await this.saveEmploymentDetails({ ...reqBody, userId });
     const bankDetails = await this.saveBankDetails({ ...reqBody, userId });
     const nokDetails = await this.saveNextOfKinDetails({ ...reqBody, userId });
@@ -290,7 +320,7 @@ class AccountService {
 
     const dataObj = {
       accountType: accountType.dataValues.accountType,
-      personalDetails: user.dataValues,
+      personalDetails,
       contactDetails: contactDetails.dataValues,
       employmentDetails: employmentDetails.dataValues,
       nokDetails: nokDetails.dataValues,
@@ -301,6 +331,8 @@ class AccountService {
       signatories,
       authPersonnels: authPersonnels,
     };
+
+    console.log(dataObj);
 
     const generatedPdf = await pdfService.generatePdf("joint.temp", dataObj);
     const extraAttachment: Array<any> = [];
@@ -323,8 +355,8 @@ class AccountService {
     await mailService.sendMail({
       from: `FCSL Asset Mgt <${mailConfig.mailFrom}>`,
       to: mailConfig.mailTo,
-      subject: `${dataObj.accountType} account - ${user.firstName} ${user.surname}`,
-      text: `Account was successfullly created for ${user.firstName} ${user.surname}`,
+      subject: `${dataObj.accountType} account`,
+      text: `Joint Account was successfullly created`,
       attachments: [
         {
           filename: generatedPdf,

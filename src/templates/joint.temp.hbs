@@ -28,73 +28,68 @@
             <h2 class="font-bold">PERSONAL DETAILS</h2>
           </div>
           <div class="px-3 py-2">
-            <div class="flex text-base py-1 justify-between w-full">
-              <div class="w-[75%]">
+            {{#each personalDetails as |personalDetail|}}
+              <div class="border-b py-2">
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
                     <p class="font-semibold">Title:</p>
-                    <p class="pl-3">{{personalDetails.title}}</p>
+                    <p class="pl-3">{{personalDetail.title}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">First Name:</p>
-                    <p class="pl-3">{{personalDetails.firstName}}</p>
-                  </div>
-                </div>
-                <div class="flex item-center text-base py-1">
-                  <div class="flex">
-                    <p class="font-semibold">Other Name: </p>
-                    <p class="pl-3">{{{personalDetails.middleName}}}</p>
+                    <p class="pl-3">{{personalDetail.firstName}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Surname </p>
-                    <p class="pl-3">{{personalDetails.surname}}</p>
+                    <p class="pl-3">{{personalDetail.surname}}</p>
                   </div>
                 </div>
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
+                    <p class="font-semibold">Other Name: </p>
+                    <p class="pl-3">{{{personalDetail.middleName}}}</p>
+                  </div>
+
+                  <div class="flex">
                     <p class="font-semibold">Date of Birth:</p>
-                    <p class="pl-3">{{personalDetails.dateOfBirth}}</p>
+                    <p class="pl-3">{{personalDetail.dateOfBirth}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Marital Status:</p>
-                    <p class="pl-3">{{personalDetails.maritalStatus}}</p>
+                    <p class="pl-3">{{personalDetail.maritalStatus}}</p>
                   </div>
                 </div>
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
                     <p class="font-semibold">Mother's Maiden Name:</p>
-                    <p class="pl-3">{{personalDetails.motherMaidenName}}</p>
+                    <p class="pl-3">{{personalDetail.motherMaidenName}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Gender:</p>
-                    <p class="pl-3">{{personalDetails.gender}}</p>
-                  </div>
-                </div>
-                <div class="flex items-center text-base py-1">
-                  <div class="flex">
-                    <p class="font-semibold">Profession:</p>
-                    <p class="pl-3">{{personalDetails.profession}}</p>
+                    <p class="pl-3">{{personalDetail.gender}}</p>
                   </div>
                   <div class="flex pl-5">
-                    <p class="font-semibold">Country:</p>
-                    <p class="pl-3">{{personalDetails.country}}</p>
+                    <p class="font-semibold">Profession:</p>
+                    <p class="pl-3">{{personalDetail.profession}}</p>
                   </div>
                 </div>
                 <div class="flex items-center text-base py-1">
                   <div class="flex">
+                    <p class="font-semibold">Country:</p>
+                    <p class="pl-3">{{personalDetail.country}}</p>
+                  </div>
+                  <div class="flex pl-5">
                     <p class="font-semibold">State of Origin:</p>
-                    <p class="pl-3">{{personalDetails.stateOfOrigin}}</p>
+                    <p class="pl-3">{{personalDetail.stateOfOrigin}}</p>
                   </div>
                   <div class="flex pl-5">
                     <p class="font-semibold">Local Government Area:</p>
-                    <p class="pl-3">{{personalDetails.lga}}</p>
+                    <p class="pl-3">{{personalDetail.lga}}</p>
                   </div>
                 </div>
               </div>
-              <div class="w-[25%] p-1 border">
-                <img src="/src//assets/uploads/{{kycDocs.passport}}" alt="passport" />
-              </div>
-            </div>
+            {{/each}}
+
           </div>
         </div>
 

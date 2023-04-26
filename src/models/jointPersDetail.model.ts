@@ -7,11 +7,13 @@ import {
   Model,
 } from "sequelize";
 
-class PersonalDetail extends Model<
-  InferAttributes<PersonalDetail>,
-  InferCreationAttributes<PersonalDetail>
+class JointPersDetail extends Model<
+  InferAttributes<JointPersDetail>,
+  InferCreationAttributes<JointPersDetail>
 > {
   declare id: CreationOptional<number>;
+  declare userId: number | null;
+
   declare title: string;
   declare firstName: string;
   declare middleName: string | undefined;
@@ -28,7 +30,7 @@ class PersonalDetail extends Model<
   declare updatedAt: CreationOptional<Date>;
 }
 
-PersonalDetail.init(
+JointPersDetail.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -38,6 +40,10 @@ PersonalDetail.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      field: "user_id",
     },
     firstName: {
       type: DataTypes.STRING,
@@ -70,7 +76,7 @@ PersonalDetail.init(
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   },
-  { tableName: "personal_details", sequelize }
+  { tableName: "joint_personal_details", sequelize }
 );
 
-export default PersonalDetail;
+export default JointPersDetail;

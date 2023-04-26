@@ -1,5 +1,5 @@
 import { date, object, string, setLocale, mixed, array } from "yup";
-import { parse, isDate, differenceInYears } from "date-fns";
+import { differenceInYears } from "date-fns";
 
 const supportedFormat = ["image/jpeg", "image/jpg", "image/png"];
 
@@ -11,26 +11,28 @@ setLocale({
 });
 
 const jointAccountSchema = object({
-  title: string().required(),
-  firstName: string().required().trim().label("firstname"),
-  middleName: string().nullable().trim().label("middlename"),
-  surname: string().required().trim(),
-  gender: string().required(),
-  maritalStatus: string().required().label("marital status"),
-  dateOfBirth: date()
-    .test("dateOfBirth", "dob should be greater than 18years", function (value: any) {
-      return differenceInYears(new Date(), new Date(value)) >= 18;
+  // personal details
+  personalDetails: array().of(
+    object().shape({
+      title: string().required(),
+      firstName: string().required().trim().label("firstname"),
+      middleName: string().nullable().trim().label("middlename"),
+      surname: string().required().trim(),
+      gender: string().required(),
+      maritalStatus: string().required().label("marital status"),
+      dateOfBirth: date()
+        .test("dateOfBirth", "dob should be greater than 18years", function (value: any) {
+          return differenceInYears(new Date(), new Date(value)) >= 18;
+        })
+        .required()
+        .label("Dob"),
+      motherMaidenName: string().required().label("Mother Maiden Name"),
+      profession: string().required(),
+      country: string().required(),
+      stateOfOrigin: string().required().label("State of Origin"),
+      lga: string().required().label("Local Government Area"),
     })
-    .required()
-    .typeError("Date of Birth must be of type date")
-    .nullable()
-    .label("Dob"),
-
-  motherMaidenName: string().required().label("Mother Maiden Name"),
-  profession: string().required(),
-  country: string().required(),
-  stateOfOrigin: string().required().label("State of Origin"),
-  lga: string().required().label("Local Government Area"),
+  ),
 
   //   contact address
   contactAddress: string().required().label("Contact Address"),

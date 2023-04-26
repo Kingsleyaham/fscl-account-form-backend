@@ -39,7 +39,7 @@ AccountType.init(
       type: DataTypes.STRING,
       field: "table_ref",
       defaultValue: "personal_details",
-      comment: '"personal_details", "corporate_details"',
+      comment: '"personal_details", "corporate_details","joint_details',
     },
 
     createdAt: DataTypes.DATE,
