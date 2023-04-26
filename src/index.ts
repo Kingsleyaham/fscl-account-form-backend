@@ -18,8 +18,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(cors()); // Allows incoming requests from any ip
 
-app.use(express.static(__dirname + "/assets"));
-
 // routes
 app.use("/api", router);
 
@@ -34,8 +32,8 @@ app.listen(appConfig.PORT, async () => {
 
   try {
     await sequelize.authenticate();
-    // if (appConfig.NODE_ENV === "development") await sequelize.sync({ alter: true });
-    await sequelize.sync({ alter: true });
+    if (appConfig.NODE_ENV === "development") await sequelize.sync({ alter: true });
+    // await sequelize.sync({ alter: true });
     console.log("Connection to database successful.");
   } catch (error) {
     console.error("Unable to connect to the database:", error);
