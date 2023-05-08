@@ -33,6 +33,9 @@ import path from "path";
 import { mailConfig } from "../config";
 
 class AccountService {
+  pdfPath = "./src/assets/pdfs";
+  uploadsPath = "./src/assets/uploads";
+
   async savePersonalDetails(reqBody: IPersonalDetails) {
     return PersonalDetail.create({ ...reqBody });
   }
@@ -256,19 +259,16 @@ class AccountService {
     const generatedPdf = await pdfService.generatePdf("individual.temp", dataObj);
     const extraAttachment: Array<any> = [];
 
-    const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
-    const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
-
     // add authpersonnels files as attachments
     dataObj.authPersonnels.forEach((personnel: any) => {
-      extraAttachment.push({ path: `${uploadsPath}/${personnel.passport}` });
-      extraAttachment.push({ path: `${uploadsPath}/${personnel.signature}` });
+      extraAttachment.push({ path: `${this.uploadsPath}/${personnel.passport}` });
+      extraAttachment.push({ path: `${this.uploadsPath}/${personnel.signature}` });
     });
 
     // add signatories uploads as attachments
 
     dataObj.signatories.forEach((signatory: any) =>
-      extraAttachment.push({ path: `${uploadsPath}/${signatory.signature}` })
+      extraAttachment.push({ path: `${this.uploadsPath}/${signatory.signature}` })
     );
 
     await mailService.sendMail({
@@ -279,12 +279,12 @@ class AccountService {
       attachments: [
         {
           filename: generatedPdf,
-          path: `${pdfPath}/${generatedPdf}`,
+          path: `${this.pdfPath}/${generatedPdf}`,
         },
-        { path: `${uploadsPath}/${dataObj.kycDocs.signature}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.signature}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.identityUpload}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.passport}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.utilityBill}` },
         ...extraAttachment,
       ],
     });
@@ -337,19 +337,16 @@ class AccountService {
     const generatedPdf = await pdfService.generatePdf("joint.temp", dataObj);
     const extraAttachment: Array<any> = [];
 
-    const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
-    const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
-
     // add authpersonnels files as attachments
     dataObj.authPersonnels.forEach((personnel: any) => {
-      extraAttachment.push({ path: `${uploadsPath}/${personnel.passport}` });
-      extraAttachment.push({ path: `${uploadsPath}/${personnel.signature}` });
+      extraAttachment.push({ path: `${this.uploadsPath}/${personnel.passport}` });
+      extraAttachment.push({ path: `${this.uploadsPath}/${personnel.signature}` });
     });
 
     // add signatories uploads as attachments
 
     dataObj.signatories.forEach((signatory: any) =>
-      extraAttachment.push({ path: `${uploadsPath}/${signatory.signature}` })
+      extraAttachment.push({ path: `${this.uploadsPath}/${signatory.signature}` })
     );
 
     await mailService.sendMail({
@@ -360,12 +357,12 @@ class AccountService {
       attachments: [
         {
           filename: generatedPdf,
-          path: `${pdfPath}/${generatedPdf}`,
+          path: `${this.pdfPath}/${generatedPdf}`,
         },
-        { path: `${uploadsPath}/${dataObj.kycDocs.signature}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.signature}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.identityUpload}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.passport}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.utilityBill}` },
         ...extraAttachment,
       ],
     });
@@ -411,19 +408,16 @@ class AccountService {
     const generatedPdf = await pdfService.generatePdf("corporate.temp", dataObj);
     const extraAttachment: Array<any> = [];
 
-    const pdfPath = "./src/assets/pdfs";
-    const uploadsPath = "./src/assets/uploads";
-
     // add authpersonnels files as attachments
     dataObj.authPersonnels.forEach((personnel: any) => {
-      extraAttachment.push({ path: `${uploadsPath}/${personnel.passport}` });
-      extraAttachment.push({ path: `${uploadsPath}/${personnel.signature}` });
+      extraAttachment.push({ path: `${this.uploadsPath}/${personnel.passport}` });
+      extraAttachment.push({ path: `${this.uploadsPath}/${personnel.signature}` });
     });
 
     // add signatories uploads as attachments
 
     dataObj.signatories.forEach((signatory: any) =>
-      extraAttachment.push({ path: `${uploadsPath}/${signatory.signature}` })
+      extraAttachment.push({ path: `${this.uploadsPath}/${signatory.signature}` })
     );
 
     await mailService.sendMail({
@@ -434,12 +428,12 @@ class AccountService {
       attachments: [
         {
           filename: generatedPdf,
-          path: `${pdfPath}/${generatedPdf}`,
+          path: `${this.pdfPath}/${generatedPdf}`,
         },
-        { path: `${uploadsPath}/${dataObj.kycDocs.signature}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.identityUpload}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.passport}` },
-        { path: `${uploadsPath}/${dataObj.kycDocs.utilityBill}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.signature}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.identityUpload}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.passport}` },
+        { path: `${this.uploadsPath}/${dataObj.kycDocs.utilityBill}` },
         ...extraAttachment,
       ],
     });
