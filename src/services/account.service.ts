@@ -411,8 +411,8 @@ class AccountService {
     const generatedPdf = await pdfService.generatePdf("corporate.temp", dataObj);
     const extraAttachment: Array<any> = [];
 
-    const pdfPath = path.join(process.cwd(), "src/assets/pdfs");
-    const uploadsPath = path.join(process.cwd(), "src/assets/uploads");
+    const pdfPath = "./src/assets/pdfs";
+    const uploadsPath = "./src/assets/uploads";
 
     // add authpersonnels files as attachments
     dataObj.authPersonnels.forEach((personnel: any) => {

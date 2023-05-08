@@ -15,7 +15,7 @@ class PDFService {
   }
 
   async generatePdf(templateName: string, data: object) {
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({ headless: true });
 
     const page = await browser.newPage();
 
@@ -25,7 +25,8 @@ class PDFService {
 
     const fileName = `${templateName}-${Date.now()}-${Math.round(Math.random() * 1e9)}.pdf`;
 
-    const pdfPath = path.join(process.cwd(), "src/assets/pdfs", fileName);
+    // const pdfPath = path.join(process.cwd(), "src/assets/pdfs", fileName);
+    const pdfPath = path.join("./src/assets/pdfs", fileName);
 
     // create pdf
     await page.pdf({
